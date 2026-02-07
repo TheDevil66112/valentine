@@ -14,23 +14,37 @@
     }
 
     body{
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
       background: linear-gradient(135deg, #ff4d6d, #ff758f, #ffb3c1);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       color: white;
+      padding: 30px 10px;
+      position: relative;
+    }
+
+    /* Contenitore fisso per cuori */
+    .hearts-container{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* Cuori in background */
     .floating-heart {
       position: absolute;
-      bottom: -50px;
+      bottom: -60px;
       font-size: 22px;
       animation: rise 6s linear infinite;
       opacity: 0.85;
-      z-index: 0;
     }
 
     @keyframes rise {
@@ -40,7 +54,7 @@
 
     /* Container grande */
     .container{
-      width: 90%;
+      width: 95%;
       max-width: 900px;
       min-height: 520px;
       padding: 50px;
@@ -50,13 +64,7 @@
       backdrop-filter: blur(14px);
       box-shadow: 0px 10px 50px rgba(0,0,0,0.25);
       z-index: 2;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
+      margin: auto;
     }
 
     h1{
@@ -109,6 +117,7 @@
       background: rgba(255,255,255,0.5);
       color: #b3002d;
       position: relative;
+      transition: 0.2s;
     }
 
     /* Pagine */
@@ -229,55 +238,6 @@
       display: none;
     }
 
-    /* Pagina tulipani */
-    .tulip-page{
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(14px);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      animation: fadeIn 1s ease;
-    }
-
-    .tulip-page.active{
-      display: flex;
-    }
-
-    .tulips{
-      font-size: 120px;
-      animation: bloom 2.5s ease-in-out infinite;
-    }
-
-    @keyframes bloom{
-      0% { transform: scale(0.8); opacity: 0.5; }
-      50% { transform: scale(1.15); opacity: 1; }
-      100% { transform: scale(0.8); opacity: 0.5; }
-    }
-
-    .tulip-text{
-      font-size: 40px;
-      font-weight: bold;
-      margin-top: 20px;
-      text-shadow: 0px 0px 20px rgba(0,0,0,0.2);
-    }
-
-    @keyframes fadeIn{
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeOut{
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
-
     @media(max-width: 750px){
       .container{
         padding: 30px;
@@ -288,12 +248,23 @@
         font-size: 35px;
       }
 
+      p{
+        font-size: 18px;
+      }
+
       .main-layout{
         grid-template-columns: 1fr;
       }
 
-      .tulip-text{
-        font-size: 28px;
+      .menu{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .menu button{
+        width: 45%;
+        font-size: 14px;
       }
     }
   </style>
@@ -301,11 +272,8 @@
 
 <body>
 
-  <!-- PAGINA TULIPANI -->
-  <div class="tulip-page" id="tulipPage">
-    <div class="tulips">💐</div>
-    <div class="tulip-text">Per te amore i fiori che non ti ho potuto dare ❤️</div>
-  </div>
+  <!-- CONTENITORE CUORI -->
+  <div class="hearts-container" id="heartsContainer"></div>
 
 
   <!-- PAGINA 0: DATA -->
@@ -350,6 +318,7 @@
 
     <div class="main-layout">
 
+      <!-- Menu -->
       <div class="menu">
         <button onclick="showSection('lettera')">💌 Lettera</button>
         <button onclick="showSection('canzone')">🎶 Canzone</button>
@@ -357,6 +326,7 @@
         <button onclick="showSection('extra')">❤️ Extra</button>
       </div>
 
+      <!-- Contenuti -->
       <div class="content-box">
 
         <div id="lettera">
@@ -432,6 +402,7 @@
 
 
   <script>
+    // DATA GIUSTA
     const correctDate = "12/09/2025";
 
     function checkDate(){
@@ -439,26 +410,10 @@
       const errorMsg = document.getElementById("errorMsg");
 
       if(input === correctDate){
-
+        errorMsg.style.display = "none";
         document.getElementById("pageDate").classList.remove("active");
-
-        // mostra tulipani
-        const tulipPage = document.getElementById("tulipPage");
-        tulipPage.classList.add("active");
-
-        // dopo 3 secondi svanisce e va alla pagina start
-        setTimeout(() => {
-          tulipPage.style.animation = "fadeOut 1.2s ease forwards";
-
-          setTimeout(() => {
-            tulipPage.classList.remove("active");
-            tulipPage.style.animation = "fadeIn 1s ease";
-
-            document.getElementById("pageStart").classList.add("active");
-          }, 1200);
-
-        }, 2800);
-
+        document.getElementById("pageStart").classList.add("active");
+        window.scrollTo(0,0);
       } else {
         errorMsg.style.display = "block";
       }
@@ -468,8 +423,8 @@
     const noBtn = document.getElementById("noBtn");
 
     noBtn.addEventListener("mouseover", () => {
-      const maxX = 350;
-      const maxY = 200;
+      const maxX = 250;
+      const maxY = 150;
 
       const randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
       const randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
@@ -477,11 +432,14 @@
       noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
     });
 
+    // Vai alla pagina principale
     function goToMain(){
       document.getElementById("pageStart").classList.remove("active");
       document.getElementById("pageMain").classList.add("active");
+      window.scrollTo(0,0);
     }
 
+    // Cambia sezione
     function showSection(sectionId){
       const sections = ["lettera", "canzone", "foto", "extra"];
       sections.forEach(id => {
@@ -489,23 +447,27 @@
       });
 
       document.getElementById(sectionId).style.display = "block";
+      window.scrollTo(0,0);
     }
 
-    // Cuori che salgono
+    // Cuori che salgono (stabili senza tremolio)
     function createHeart(){
       const heart = document.createElement("div");
       heart.classList.add("floating-heart");
       heart.innerHTML = "❤️";
+
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
       heart.style.fontSize = (Math.random() * 25 + 15) + "px";
-      document.body.appendChild(heart);
+
+      document.getElementById("heartsContainer").appendChild(heart);
 
       setTimeout(() => heart.remove(), 6000);
     }
 
-    setInterval(createHeart, 400);
+    setInterval(createHeart, 450);
 
+    // Enter per confermare data
     document.getElementById("dateInput").addEventListener("keypress", function(e){
       if(e.key === "Enter"){
         checkDate();
@@ -515,6 +477,8 @@
 
 </body>
 </html>
+
+
 
 
 
