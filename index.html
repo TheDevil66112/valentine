@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Wanna be my Valentine? ❤️</title>
+  <title>Valentine ❤️</title>
 
   <style>
     *{
@@ -23,7 +23,7 @@
       color: white;
     }
 
-    /* Background cuori */
+    /* Cuori in background */
     .floating-heart {
       position: absolute;
       bottom: -50px;
@@ -192,14 +192,6 @@
       transform: scale(1.05);
     }
 
-    iframe{
-      width: 100%;
-      height: 300px;
-      border-radius: 18px;
-      border: none;
-      margin-top: 15px;
-    }
-
     .footer{
       margin-top: 25px;
       font-size: 16px;
@@ -207,7 +199,36 @@
       text-align: center;
     }
 
-    /* Responsive */
+    /* input data */
+    .date-box{
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    input{
+      padding: 14px;
+      width: 240px;
+      border-radius: 16px;
+      border: none;
+      outline: none;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .error{
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background: rgba(255, 0, 70, 0.25);
+      padding: 12px;
+      border-radius: 15px;
+      display: none;
+    }
+
     @media(max-width: 750px){
       .container{
         padding: 30px;
@@ -221,29 +242,45 @@
       .main-layout{
         grid-template-columns: 1fr;
       }
-
-      iframe{
-        height: 220px;
-      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- PAGINA 1 -->
-  <div class="container page active" id="pageStart">
+  <!-- PAGINA 0: DATA -->
+  <div class="container page active" id="pageDate">
+    <div class="heart">📅❤️</div>
+    <h1>Accesso Speciale</h1>
+    <p>Inserisci la nostra data segreta 💕</p>
+
+    <div class="date-box">
+      <input type="text" id="dateInput" placeholder="GG/MM/AAAA">
+      <button class="btn btn-yes" onclick="checkDate()">Entra 💘</button>
+    </div>
+
+    <div class="error" id="errorMsg">
+      Data sbagliata 😈 riprova amore...
+    </div>
+
+    <div class="footer">Suggerimento: è un giorno speciale ❤️</div>
+  </div>
+
+
+  <!-- PAGINA 1: WANNA BE MY VALENTINE -->
+  <div class="container page" id="pageStart">
     <div class="heart">❤️</div>
     <h1>Wanna be my Valentine?</h1>
-    <p>Dimmi di sì... oppure prova a cliccare NO 😈</p>
+    <p>Sei pronta a dire di sì? 😏</p>
 
     <button class="btn btn-yes" onclick="goToMain()">YES 💘</button>
     <button class="btn btn-no" id="noBtn">NO 😡</button>
 
-    <div class="footer">Creato con amore ❤️</div>
+    <div class="footer">Attenzione: il NO è un po’ timido 😈</div>
   </div>
 
-  <!-- PAGINA 2 -->
+
+  <!-- PAGINA 2: MAIN -->
   <div class="container page" id="pageMain">
     <div style="text-align:center;">
       <div class="heart">💌</div>
@@ -280,40 +317,34 @@
 
         <div id="canzone" style="display:none;">
           <h2>🎶 La canzone che mi ricorda di te</h2>
-          <p>
-            Ogni volta che ascolto questa canzone penso a te ❤️
-          </p>
+          <p>Ogni volta che la ascolto penso a te ❤️</p>
 
           <div style="text-align:center; margin-top:20px;">
-  <p style="font-size:18px;">
-    Questa è la canzone che mi ricorda di te ❤️
-  </p>
-
-  <a href="https://www.youtube.com/watch?v=ZbrgimzJE5E" target="_blank"
-     style="
-      display:inline-block;
-      margin-top:15px;
-      padding:15px 30px;
-      background:white;
-      color:#ff2d55;
-      font-size:20px;
-      font-weight:bold;
-      border-radius:18px;
-      text-decoration:none;
-      box-shadow:0px 8px 20px rgba(0,0,0,0.25);
-      transition:0.3s;
-     "
-     onmouseover="this.style.transform='scale(1.08)'"
-     onmouseout="this.style.transform='scale(1)'"
-  >
-    🎶 Ascolta la canzone
-  </a>
-</div>
+            <a href="https://www.youtube.com/watch?v=ZbrgimzJE5E" target="_blank"
+              style="
+                display:inline-block;
+                margin-top:15px;
+                padding:15px 30px;
+                background:white;
+                color:#ff2d55;
+                font-size:20px;
+                font-weight:bold;
+                border-radius:18px;
+                text-decoration:none;
+                box-shadow:0px 8px 20px rgba(0,0,0,0.25);
+                transition:0.3s;
+              "
+              onmouseover="this.style.transform='scale(1.08)'"
+              onmouseout="this.style.transform='scale(1)'"
+            >
+              🎶 Ascolta la canzone
+            </a>
+          </div>
         </div>
 
         <div id="foto" style="display:none;">
           <h2>📸 Le nostre foto</h2>
-          <p>Qui metterò i nostri momenti più belli ❤️</p>
+          <p>Qui ci sono i nostri momenti più belli ❤️</p>
 
           <div class="gallery">
             <img src="foto1.jpeg" alt="Foto 1">
@@ -321,10 +352,6 @@
             <img src="foto3.jpeg" alt="Foto 3">
             <img src="foto4.jpeg" alt="Foto 4">
           </div>
-
-          <p style="margin-top:12px;">
-            
-          </p>
         </div>
 
         <div id="extra" style="display:none;">
@@ -345,7 +372,23 @@
     <div class="footer">Da me per te ❤️</div>
   </div>
 
+
   <script>
+    // DATA GIUSTA
+    const correctDate = "12/09/2025";
+
+    function checkDate(){
+      const input = document.getElementById("dateInput").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+
+      if(input === correctDate){
+        document.getElementById("pageDate").classList.remove("active");
+        document.getElementById("pageStart").classList.add("active");
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+
     // Bottone NO che scappa
     const noBtn = document.getElementById("noBtn");
 
@@ -359,11 +402,13 @@
       noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
     });
 
+    // Vai alla pagina principale
     function goToMain(){
       document.getElementById("pageStart").classList.remove("active");
       document.getElementById("pageMain").classList.add("active");
     }
 
+    // Cambia sezione
     function showSection(sectionId){
       const sections = ["lettera", "canzone", "foto", "extra"];
       sections.forEach(id => {
@@ -387,7 +432,16 @@
     }
 
     setInterval(createHeart, 400);
+
+    // Enter per confermare data
+    document.getElementById("dateInput").addEventListener("keypress", function(e){
+      if(e.key === "Enter"){
+        checkDate();
+      }
+    });
   </script>
 
 </body>
 </html>
+
+
