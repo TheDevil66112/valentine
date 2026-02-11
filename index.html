@@ -38,7 +38,6 @@
       z-index: 0;
     }
 
-    /* Cuori in background */
     .floating-heart {
       position: absolute;
       bottom: -60px;
@@ -52,7 +51,7 @@
       100% { transform: translateY(-120vh) scale(1.8); opacity: 0; }
     }
 
-    /* Container grande */
+    /* Container principale */
     .container{
       width: 95%;
       max-width: 900px;
@@ -129,7 +128,7 @@
       display: block;
     }
 
-    /* Main layout */
+    /* Layout principale */
     .main-layout{
       display: grid;
       grid-template-columns: 260px 1fr;
@@ -138,7 +137,7 @@
       text-align: left;
     }
 
-    /* Menu laterale */
+    /* Menu */
     .menu{
       background: rgba(255,255,255,0.15);
       border-radius: 20px;
@@ -238,6 +237,32 @@
       display: none;
     }
 
+    /* Pagina Tulipani */
+    .bouquet{
+      font-size: 140px;
+      animation: bouquetPop 2.5s ease-in-out forwards;
+      margin-bottom: 20px;
+    }
+
+    @keyframes bouquetPop {
+      0% { transform: scale(0.3); opacity: 0; }
+      40% { transform: scale(1.2); opacity: 1; }
+      70% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    .fade-text{
+      animation: fadeText 2.5s ease-in-out forwards;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    @keyframes fadeText {
+      0% { opacity: 0; transform: translateY(10px); }
+      40% { opacity: 1; transform: translateY(0px); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
+
     @media(max-width: 750px){
       .container{
         padding: 30px;
@@ -265,6 +290,10 @@
       .menu button{
         width: 45%;
         font-size: 14px;
+      }
+
+      .bouquet{
+        font-size: 110px;
       }
     }
   </style>
@@ -295,7 +324,14 @@
   </div>
 
 
-  <!-- PAGINA 1: WANNA BE MY VALENTINE -->
+  <!-- PAGINA 1: MAZZO DI TULIPANI -->
+  <div class="container page" id="pageFlowers">
+    <div class="bouquet">💐🌷</div>
+    <div class="fade-text">Per te amore mio... ❤️</div>
+  </div>
+
+
+  <!-- PAGINA 2: WANNA BE MY VALENTINE -->
   <div class="container page" id="pageStart">
     <div class="heart">❤️</div>
     <h1>Wanna be my Valentine?</h1>
@@ -308,7 +344,7 @@
   </div>
 
 
-  <!-- PAGINA 2: MAIN -->
+  <!-- PAGINA 3: MAIN -->
   <div class="container page" id="pageMain">
     <div style="text-align:center;">
       <div class="heart">💌</div>
@@ -358,10 +394,6 @@
             Ti scelgo nei giorni belli, nei giorni difficili, quando sei felice, quando sei stanca,
             quando hai mille pensieri e quando non hai voglia di parlare.<br><br>
 
-            Ti scelgo perché sei la persona che mi fa venire voglia di migliorare.
-            Perché con te mi sento più forte.
-            Perché con te tutto sembra più possibile.<br><br>
-
             Non so cosa ci riserverà il futuro, ma so una cosa:
             io voglio viverlo con te.
             Voglio ridere con te, crescere con te, viaggiare con te,
@@ -405,7 +437,7 @@
 
         <div id="foto" style="display:none;">
           <h2>📸 Le nostre foto</h2>
-          <p>alcuni dei momenti passati insieme ❤️</p>
+          <p>Qui ci sonoalcuni dei nostri momenti ❤️</p>
 
           <div class="gallery">
             <img src="foto1.jpeg" alt="Foto 1">
@@ -457,9 +489,18 @@
 
       if(input === correctDate){
         errorMsg.style.display = "none";
+
         document.getElementById("pageDate").classList.remove("active");
-        document.getElementById("pageStart").classList.add("active");
+        document.getElementById("pageFlowers").classList.add("active");
         window.scrollTo(0,0);
+
+        // dopo 3 secondi passa a wanna be my valentine
+        setTimeout(() => {
+          document.getElementById("pageFlowers").classList.remove("active");
+          document.getElementById("pageStart").classList.add("active");
+          window.scrollTo(0,0);
+        }, 3000);
+
       } else {
         errorMsg.style.display = "block";
       }
@@ -485,7 +526,7 @@
       window.scrollTo(0,0);
     }
 
-    // Cambia sezione + reset motivi
+    // Cambia sezione
     function showSection(sectionId){
       const sections = ["lettera", "canzone", "foto", "extra"];
       sections.forEach(id => {
@@ -495,7 +536,6 @@
       document.getElementById(sectionId).style.display = "block";
       window.scrollTo(0,0);
 
-      // se entri nella sezione extra resetti l'animazione
       if(sectionId === "extra"){
         resetLoveList();
       }
