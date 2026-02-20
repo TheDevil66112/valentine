@@ -1,146 +1,598 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Non è finita davvero</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valentine ❤️</title>
 
   <style>
-    body {
+    *{
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #0b0b0b, #1a1a1a);
-      color: white;
+      box-sizing: border-box;
+      font-family: "Poppins", Arial, sans-serif;
+    }
+
+    body{
       min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: linear-gradient(135deg, #ff4d6d, #ff758f, #ffb3c1);
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 30px 15px;
-      box-sizing: border-box;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 700px;
-      padding: 30px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.8);
-      text-align: center;
-      backdrop-filter: blur(6px);
-      box-sizing: border-box;
-    }
-
-    h1 {
-      color: #ff4d4d;
-      font-size: 32px;
-      margin-bottom: 18px;
-    }
-
-    p {
-      font-size: 17px;
-      line-height: 1.8;
-      color: #e0e0e0;
-      margin: 15px 0;
-    }
-
-    .highlight {
-      color: #ffffff;
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    .final {
-      margin-top: 25px;
-      font-size: 19px;
-      font-weight: bold;
-      color: #ffcccc;
-    }
-
-    button {
-      margin-top: 30px;
-      padding: 12px 25px;
-      font-size: 16px;
-      border: none;
-      border-radius: 12px;
-      background: #ff4d4d;
       color: white;
-      cursor: pointer;
-      transition: 0.3s;
+      padding: 30px 10px;
+      position: relative;
+    }
+
+    /* Contenitore fisso per cuori */
+    .hearts-container{
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      max-width: 300px;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    button:hover {
-      background: #ff1a1a;
+    .floating-heart {
+      position: absolute;
+      bottom: -60px;
+      font-size: 22px;
+      animation: rise 6s linear infinite;
+      opacity: 0.85;
     }
 
-    .firma {
-      margin-top: 35px;
-      font-size: 15px;
-      color: #bdbdbd;
+    @keyframes rise {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.8); opacity: 0; }
+    }
+
+    /* Container principale */
+    .container{
+      width: 95%;
+      max-width: 900px;
+      min-height: 520px;
+      padding: 50px;
+      border-radius: 30px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(14px);
+      box-shadow: 0px 10px 50px rgba(0,0,0,0.25);
+      z-index: 2;
+      margin: auto;
+    }
+
+    h1{
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    p{
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+
+    .heart{
+      font-size: 75px;
+      animation: beat 1s infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes beat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.25); }
+      100% { transform: scale(1); }
+    }
+
+    /* Bottoni */
+    .btn{
+      border: none;
+      padding: 15px 35px;
+      border-radius: 20px;
+      font-size: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      margin: 10px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn-yes{
+      background: white;
+      color: #ff2d55;
+    }
+
+    .btn-yes:hover{
+      transform: scale(1.08);
+      background: #ff2d55;
+      color: white;
+    }
+
+    .btn-no{
+      background: rgba(255,255,255,0.5);
+      color: #b3002d;
+      position: relative;
+      transition: 0.2s;
+    }
+
+    /* Pagine */
+    .page{
+      display: none;
+    }
+
+    .active{
+      display: block;
+    }
+
+    /* Layout principale */
+    .main-layout{
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 25px;
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    /* Menu */
+    .menu{
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .menu button{
+      padding: 14px;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      background: rgba(255,255,255,0.35);
+      color: white;
+      transition: 0.3s;
+    }
+
+    .menu button:hover{
+      transform: scale(1.04);
+      background: white;
+      color: #ff2d55;
+    }
+
+    /* Contenuto */
+    .content-box{
+      background: rgba(255,255,255,0.15);
+      border-radius: 22px;
+      padding: 25px;
+      line-height: 1.8;
+      font-size: 18px;
+      min-height: 300px;
+    }
+
+    .content-box h2{
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 26px;
+    }
+
+    /* Gallery */
+    .gallery{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 15px;
+    }
+
+    .gallery img{
+      width: 100%;
+      border-radius: 18px;
+      border: 2px solid rgba(255,255,255,0.4);
+      transition: 0.3s;
+    }
+
+    .gallery img:hover{
+      transform: scale(1.05);
+    }
+
+    .footer{
+      margin-top: 25px;
+      font-size: 16px;
+      opacity: 0.9;
+      text-align: center;
+    }
+
+    /* input data */
+    .date-box{
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    input{
+      padding: 14px;
+      width: 240px;
+      border-radius: 16px;
+      border: none;
+      outline: none;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .error{
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background: rgba(255, 0, 70, 0.25);
+      padding: 12px;
+      border-radius: 15px;
+      display: none;
+    }
+
+    /* Pagina Tulipani */
+    .bouquet{
+      font-size: 140px;
+      animation: bouquetPop 2.5s ease-in-out forwards;
+      margin-bottom: 20px;
+    }
+
+    @keyframes bouquetPop {
+      0% { transform: scale(0.3); opacity: 0; }
+      40% { transform: scale(1.2); opacity: 1; }
+      70% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+
+    .fade-text{
+      animation: fadeText 2.5s ease-in-out forwards;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    @keyframes fadeText {
+      0% { opacity: 0; transform: translateY(10px); }
+      40% { opacity: 1; transform: translateY(0px); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
+
+    @media(max-width: 750px){
+      .container{
+        padding: 30px;
+        min-height: auto;
+      }
+
+      h1{
+        font-size: 35px;
+      }
+
+      p{
+        font-size: 18px;
+      }
+
+      .main-layout{
+        grid-template-columns: 1fr;
+      }
+
+      .menu{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .menu button{
+        width: 45%;
+        font-size: 14px;
+      }
+
+      .bouquet{
+        font-size: 110px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="card">
-    <h1>Non è finita davvero</h1>
 
-    <p>
-      Io non sto scrivendo questo per convincerti.<br>
-      Non sto scrivendo questo per farti pena.<br>
-      E nemmeno per riaprire ferite.
-    </p>
+  <!-- CONTENITORE CUORI -->
+  <div class="hearts-container" id="heartsContainer"></div>
 
-    <p>
-      Sto scrivendo questo perché alcune cose, quando sono vere,<br>
-      non si riescono a cancellare con il tempo.
-    </p>
 
-    <p class="highlight">
-      E tu sei una di quelle cose.
-    </p>
+  <!-- PAGINA 0: DATA -->
+  <div class="container page active" id="pageDate">
+    <div class="heart">📅❤️</div>
+    <h1>Accesso Speciale</h1>
+    <p>Inserisci la nostra data segreta 💕</p>
 
-    <p>
-      Se mi guardo indietro, vedo errori, parole sbagliate,<br>
-      momenti in cui potevo essere migliore.
-    </p>
-
-    <p>
-      Ma vedo anche una cosa chiara:<br>
-      <span class="highlight">non ho mai smesso di sentire che eri la persona giusta.</span>
-    </p>
-
-    <p>
-      Io posso andare avanti, posso fare finta di stare bene,<br>
-      posso sorridere davanti agli altri.
-    </p>
-
-    <p class="highlight">
-      Ma dentro di me lo so… non è mai stato “chiuso”.
-    </p>
-
-    <p>
-      Non voglio prometterti cose finte.<br>
-      Non voglio dirti frasi che suonano bene.
-    </p>
-
-    <p class="final">
-      Voglio solo che tu sappia una cosa semplice:<br>
-      se un giorno ti girassi… io sarei ancora qui.
-    </p>
-
-    <button onclick="alert('A volte non serve ricominciare da zero... basta ricominciare da noi.')">
-      Premi qui
-    </button>
-
-    <div class="firma">
-      — Non è un addio.
+    <div class="date-box">
+      <input type="text" id="dateInput" placeholder="GG/MM/AAAA">
+      <button class="btn btn-yes" onclick="checkDate()">Entra 💘</button>
     </div>
+
+    <div class="error" id="errorMsg">
+      Data sbagliata 😈 riprova amore...
+    </div>
+
+    <div class="footer">Suggerimento: è un giorno speciale ❤️</div>
   </div>
+
+
+  <!-- PAGINA 1: MAZZO DI TULIPANI -->
+  <div class="container page" id="pageFlowers">
+    <div class="bouquet">💐🌷</div>
+    <div class="fade-text">Per te amore mio... ❤️</div>
+  </div>
+
+
+  <!-- PAGINA 2: WANNA BE MY VALENTINE -->
+  <div class="container page" id="pageStart">
+    <div class="heart">❤️</div>
+    <h1>Wanna be my Valentine?</h1>
+    <p>Sei pronta a dire di sì? 😏</p>
+
+    <button class="btn btn-yes" onclick="goToMain()">YES 💘</button>
+    <button class="btn btn-no" id="noBtn">NO 😡</button>
+
+    <div class="footer">Attenzione: il NO è un po’ timido 😈</div>
+  </div>
+
+
+  <!-- PAGINA 3: MAIN -->
+  <div class="container page" id="pageMain">
+    <div style="text-align:center;">
+      <div class="heart">💌</div>
+      <h1>Benvenuta amore ❤️</h1>
+      <p>Ho preparato questo piccolo regalo per te</p>
+    </div>
+
+    <div class="main-layout">
+
+      <!-- Menu -->
+      <div class="menu">
+        <button onclick="showSection('lettera')">💌 Lettera</button>
+        <button onclick="showSection('canzone')">🎶 Canzone</button>
+        <button onclick="showSection('foto')">📸 Le nostre foto</button>
+        <button onclick="showSection('extra')">🌹 Perché ti amo</button>
+      </div>
+
+      <!-- Contenuti -->
+      <div class="content-box">
+
+        <div id="lettera">
+          <h2>💌 La mia lettera per te</h2>
+          <p>
+            Amore mio,<br><br>
+
+            oggi non voglio scriverti una semplice lettera… voglio scriverti qualcosa che ti faccia sentire
+            davvero quanto sei importante per me.<br><br>
+
+            Da quando sei entrata nella mia vita, tante cose sono cambiate.
+            Anche nei giorni più normali, quelli dove non succede niente di speciale,
+            tu riesci a renderli più belli solo con un sorriso, con uno sguardo, con la tua presenza.<br><br>
+
+            Sei diventata la mia parte preferita della giornata.
+            Sei quel pensiero che mi viene senza volerlo, quella persona che mi manca anche quando è tutto ok,
+            quella che riesce a farmi stare bene anche quando dentro ho un casino.<br><br>
+
+            Mi piace tutto di te… non solo le cose grandi, ma anche quelle piccole:
+            il modo in cui parli, come ridi, come ti arrabbi quando vuoi avere ragione (anche se ce l’hai sempre 😏),
+            il modo in cui mi guardi, e come riesci a farmi sentire “a casa”.<br><br>
+
+            A volte mi fermo e penso a quanto sono fortunato ad averti.
+            Perché non è scontato trovare qualcuno che ti faccia sentire capito, scelto, voluto…
+            e tu lo fai ogni giorno, anche senza accorgertene.<br><br>
+
+            Voglio che tu sappia una cosa:
+            io ti scelgo.
+            Ti scelgo nei giorni belli, nei giorni difficili, quando sei felice, quando sei stanca,
+            quando hai mille pensieri e quando non hai voglia di parlare.<br><br>
+
+            Non so cosa ci riserverà il futuro, ma so una cosa:
+            io voglio viverlo con te.
+            Voglio ridere con te, crescere con te, viaggiare con te,
+            e costruire qualcosa che sia solo nostro.<br><br>
+
+            Buon San Valentino amore mio ❤️<br><br>
+
+            <b>Ti amo più di quanto riesca a spiegare.</b><br>
+            E ti amerò sempre, ogni giorno di più. 💕
+          </p>
+        </div>
+
+
+        <div id="canzone" style="display:none;">
+  <h2>🎶 La canzone che mi ricorda di te</h2>
+  <p>Ogni volta che la ascolto penso a te ❤️</p>
+
+  <div style="margin-top:20px; text-align:center;">
+    <video controls style="width:100%; max-width:600px; border-radius:20px; box-shadow:0px 8px 20px rgba(0,0,0,0.25);">
+      <source src="song.mp4" type="video/mp4">
+      Il tuo browser non supporta il video.
+    </video>
+  </div>
+</div>
+
+
+        <div id="foto" style="display:none;">
+          <h2>📸 Le nostre foto</h2>
+          <p>Qui ci sonoalcuni dei nostri momenti ❤️</p>
+
+          <div class="gallery">
+            <img src="foto1.jpeg" alt="Foto 1">
+            <img src="foto2.jpeg" alt="Foto 2">
+            <img src="foto3.jpeg" alt="Foto 3">
+            <img src="foto4.jpeg" alt="Foto 4">
+          </div>
+        </div>
+
+
+        <div id="extra" style="display:none;">
+          <h2>🌹 Perché ti amo</h2>
+          <p style="text-align:center; margin-bottom:15px;">
+            Alcune cose che non ti dico abbastanza… ❤️
+          </p>
+
+          <ul id="loveList" style="
+            list-style:none;
+            padding:0;
+            font-size:18px;
+            line-height:2;
+            text-align:left;
+          ">
+          </ul>
+
+          <div style="text-align:center; margin-top:25px;">
+            <button class="btn btn-yes" onclick="addLoveLine()">Aggiungi un motivo 💕</button>
+          </div>
+
+          <p style="text-align:center; margin-top:25px; font-size:20px;">
+            <b>E non basterebbe comunque una vita per dirli tutti.</b> 💘
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer">Da me per te ❤️</div>
+  </div>
+
+
+  <script>
+    // DATA GIUSTA
+    const correctDate = "12/09/2025";
+
+    function checkDate(){
+      const input = document.getElementById("dateInput").value.trim();
+      const errorMsg = document.getElementById("errorMsg");
+
+      if(input === correctDate){
+        errorMsg.style.display = "none";
+
+        document.getElementById("pageDate").classList.remove("active");
+        document.getElementById("pageFlowers").classList.add("active");
+        window.scrollTo(0,0);
+
+        // dopo 3 secondi passa a wanna be my valentine
+        setTimeout(() => {
+          document.getElementById("pageFlowers").classList.remove("active");
+          document.getElementById("pageStart").classList.add("active");
+          window.scrollTo(0,0);
+        }, 3000);
+
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+
+    // Bottone NO che scappa
+    const noBtn = document.getElementById("noBtn");
+
+    noBtn.addEventListener("mouseover", () => {
+      const maxX = 250;
+      const maxY = 150;
+
+      const randomX = Math.floor(Math.random() * maxX) - (maxX / 2);
+      const randomY = Math.floor(Math.random() * maxY) - (maxY / 2);
+
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    });
+
+    // Vai alla pagina principale
+    function goToMain(){
+      document.getElementById("pageStart").classList.remove("active");
+      document.getElementById("pageMain").classList.add("active");
+      window.scrollTo(0,0);
+    }
+
+    // Cambia sezione
+    function showSection(sectionId){
+      const sections = ["lettera", "canzone", "foto", "extra"];
+      sections.forEach(id => {
+        document.getElementById(id).style.display = "none";
+      });
+
+      document.getElementById(sectionId).style.display = "block";
+      window.scrollTo(0,0);
+
+      if(sectionId === "extra"){
+        resetLoveList();
+      }
+    }
+
+    // Cuori che salgono (stabili)
+    function createHeart(){
+      const heart = document.createElement("div");
+      heart.classList.add("floating-heart");
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+      heart.style.fontSize = (Math.random() * 25 + 15) + "px";
+
+      document.getElementById("heartsContainer").appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }
+
+    setInterval(createHeart, 450);
+
+    // Enter per confermare data
+    document.getElementById("dateInput").addEventListener("keypress", function(e){
+      if(e.key === "Enter"){
+        checkDate();
+      }
+    });
+
+    // --- MOTIVI "PERCHE' TI AMO" ---
+    const loveLines = [
+      "Ti amo perché con te mi sento davvero me stesso.",
+      "Ti amo perché mi fai sorridere anche quando sono stanco.",
+      "Ti amo perché il tuo sorriso mi cambia la giornata.",
+      "Ti amo perché sei dolce ma anche forte.",
+      "Ti amo perché mi fai sentire importante.",
+      "Ti amo perché con te mi sento a casa.",
+      "Ti amo perché mi capisci anche quando non parlo.",
+      "Ti amo perché sei la cosa più bella che mi sia capitata.",
+      "Ti amo perché mi fai venire voglia di essere migliore.",
+      "Ti amo perché sei la mia persona preferita al mondo.",
+      "Ti amo perché mi manchi anche quando sei qui vicino.",
+      "Ti amo perché sei tu… e basta."
+    ];
+
+    let loveIndex = 0;
+
+    function addLoveLine(){
+      if(loveIndex < loveLines.length){
+        const li = document.createElement("li");
+        li.innerHTML = "❤️ " + loveLines[loveIndex];
+        li.style.opacity = "0";
+        li.style.transform = "translateY(10px)";
+        li.style.transition = "0.5s";
+
+        document.getElementById("loveList").appendChild(li);
+
+        setTimeout(() => {
+          li.style.opacity = "1";
+          li.style.transform = "translateY(0)";
+        }, 100);
+
+        loveIndex++;
+      }
+    }
+
+    function resetLoveList(){
+      document.getElementById("loveList").innerHTML = "";
+      loveIndex = 0;
+    }
+  </script>
+
 </body>
 </html>
 
